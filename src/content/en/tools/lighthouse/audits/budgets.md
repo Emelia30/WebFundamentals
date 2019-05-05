@@ -2,7 +2,7 @@ project_path: /web/tools/_project.yaml
 description: Official documentation for the "Performance Budgets" and "Keep Request Counts And File Sizes Small" Lighthouse audits.
 book_path: /web/tools/_book.yaml
 
-{# wf_updated_on: 2019-05-01 #}
+{# wf_updated_on: 2019-05-05 #}
 {# wf_published_on: 2019-04-30 #}
 {# wf_blink_components: Platform>DevTools #}
 
@@ -18,19 +18,8 @@ book_path: /web/tools/_book.yaml
 After putting in the hard work of improving your site performance, use a *performance budget* to prevent
 your site performance from regressing over time.
 
-If you haven't defined a budget file the **Budgets** section of your report lists the total number of requests
-and file size of scripts, images, and so on. The **Budgets** section is only available when running Lighthouse
-from the command line.
-
-<figure>
-  <img src="images/budgetsdefault.png"
-       alt="A default budget report."/>
-  <figcaption>
-    <b>Figure X</b>. A default budget report.
-  </figcaption>
-</figure>
-
-This same information also appears under the **Keep Request Counts And File Sizes Small** audit. This
+The **Keep Request Counts And File Sizes Small** audit lists the total number of requests
+and file size of scripts, images, and so on. This
 audit is available in all Lighthouse runtime environments.
 
 <figure>
@@ -41,86 +30,8 @@ audit is available in all Lighthouse runtime environments.
   </figcaption>
 </figure>
 
-Example JSON output:
 
-```json
-"resource-budget": {
-  "id": "resource-budget",
-  "title": "Keep request counts and file sizes small",
-  "description": "To set budgets for the quantity and size of page resources, add a budget.json file.",
-  "score": null,
-  "scoreDisplayMode": "informative",
-  "details": {
-    "type": "table",
-    "headings": [
-      {
-        "key": "label",
-        "itemType": "text",
-        "text": "Resource Type"
-      },
-      {
-        "key": "count",
-        "itemType": "numeric",
-        "text": "Requests"
-      },
-      {
-        "key": "size",
-        "itemType": "bytes",
-        "text": "File Size"
-      }
-    ],
-    "items": [
-      {
-        "label": "Total",
-        "count": 21,
-        "size": 704743
-      },
-      {
-        "label": "Script",
-        "count": 2,
-        "size": 444321
-      },
-      {
-        "label": "Third-party",
-        "count": 13,
-        "size": 166841
-      },
-      {
-        "label": "Image",
-        "count": 6,
-        "size": 135096
-      },
-      {
-        "label": "Stylesheet",
-        "count": 2,
-        "size": 78948
-      },
-      {
-        "label": "Font",
-        "count": 2,
-        "size": 29119
-      },
-      {
-        "label": "Document",
-        "count": 2,
-        "size": 14588
-      },
-      {
-        "label": "Other",
-        "count": 7,
-        "size": 2671
-      },
-      {
-        "label": "Media",
-        "count": 0,
-        "size": 0
-      }
-    ]
-  }
-}
-```
-
-You can define a budget file to impose explicit limits on some or all of these categories. After defining
+You can define a budget file to impose explicit limits on some or all of these resource types. After defining
 your budget file the new **Over Budget** column tells you whether you're exceeding any of your self-defined limits.
 
 <figure>
@@ -131,8 +42,8 @@ your budget file the new **Over Budget** column tells you whether you're exceedi
   </figcaption>
 </figure>
 
-When you define a budget file, the **Performance Budgets** audit only reports on the categories that you've specified.
-But you can still access the information for the rest of the categories from the **Keep Request Counts And File Sizes Small**
+When you define a budget file, the **Performance Budgets** audit reports on the resource types that you've specified.
+But you can still access the information for the rest of the types from the **Keep Request Counts And File Sizes Small**
 audit.
 
 Example JSON output:
@@ -316,15 +227,15 @@ The table below describes each of the `budget.json` properties.
 
 ### Pass the budget file as a flag {: #flags }
 
-When running Lighthouse from the command line, pass the `--budgetPath` flag followed by the path to your
+When running Lighthouse from the command line, pass the `--budget-path` (or `--budgetPath`) flag followed by the path to your
 budget file in order to calculate whenever a category is over budget.
 
-    lighthouse https://youtube.com --budgetPath=./simple-budget.json
+    lighthouse https://youtube.com --budget-path=./simple-budget.json
 
 Pass the `--output=json` flag followed by `--output-path=./report.json` to save your report results as JSON
 in the current working directory.
 
-    lighthouse https://youtube.com --budgetPath ./simple-budget.json --output=json --output-path=report.json
+    lighthouse https://youtube.com --budget-path ./simple-budget.json --output=json --output-path=report.json
 
 If you were to assign your JSON report results to a variable named `report` you could access your
 **Keep Request Counts And File Sizes Small** and **Performance Budgets** data from 
